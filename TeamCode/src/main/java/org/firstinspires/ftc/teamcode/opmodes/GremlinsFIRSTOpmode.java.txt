@@ -16,7 +16,7 @@ public void  runOpMode(){
 
     waitForStart();
 }
-@TeleOp
+
 public class GremlinsFIRSTOpmode extends LinearOpMode {
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
