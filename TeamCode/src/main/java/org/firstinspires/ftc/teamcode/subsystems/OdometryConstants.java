@@ -10,9 +10,9 @@ public class OdometryConstants {
     public static final int ODO_CENTER    = 2;
 
     public static final OctoQuadBase.EncoderDirection ODO_LEFT_DIRECTION =
-                                                    OctoQuadBase.EncoderDirection.REVERSE;
-    public static final OctoQuadBase.EncoderDirection ODO_RIGHT_DIRECTION =
                                                     OctoQuadBase.EncoderDirection.FORWARD;
+    public static final OctoQuadBase.EncoderDirection ODO_RIGHT_DIRECTION =
+                                                    OctoQuadBase.EncoderDirection.REVERSE;
     public static final OctoQuadBase.EncoderDirection ODO_CENTER_DIRECTION =
                                                     OctoQuadBase.EncoderDirection.FORWARD;
 }
