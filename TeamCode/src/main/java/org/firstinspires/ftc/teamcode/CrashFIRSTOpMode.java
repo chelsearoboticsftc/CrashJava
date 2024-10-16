@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 //Heeeelo
+//This is the newest update that tries to add the intake and slide to opmode. (In progress.)
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoController;
 
 @TeleOp
 public class CrashFIRSTOpMode extends LinearOpMode {
@@ -14,6 +17,11 @@ public class CrashFIRSTOpMode extends LinearOpMode {
         DcMotor frontRight = null;
         DcMotor backLeft = null;
         DcMotor backRight = null;
+
+        //Intake servos
+        Servo Intake1 = null;
+        Servo Intake2 = null;
+        Servo Intake3 = null; //(up/down)
 
         telemetry.addData("Status","Initialized");
         telemetry.update();
@@ -63,6 +71,15 @@ public class CrashFIRSTOpMode extends LinearOpMode {
             frontRight.setPower(speeds[1]);
             backLeft.setPower(speeds[2]);
             backRight.setPower(speeds[3]);
+
+            //Intake code
+
+            Intake1 = hardwareMap.get(Servo.class, "Intake1"); //i don't think crash's config has gotten this far, becuase all of the variables on the varable sheet were the same before I changed them.
+            Intake2 = hardwareMap.get(Servo.class, "Intake1");
+            Intake3 = hardwareMap.get(Servo.class, "Intake1");
+            // Check config for these, they might not be configured right!!!
+
+            
 
             telemetry.update();
         }
