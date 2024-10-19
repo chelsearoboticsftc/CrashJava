@@ -75,8 +75,8 @@ public class CrashFIRSTOpMode extends LinearOpMode {
             //Intake code
 
             Intake1 = hardwareMap.get(Servo.class, "Intake1"); //i don't think crash's config has gotten this far, becuase all of the variables on the varable sheet were the same before I changed them.
-            Intake2 = hardwareMap.get(Servo.class, "Intake1");
-            Intake3 = hardwareMap.get(Servo.class, "Intake1");
+            Intake2 = hardwareMap.get(Servo.class, "Intake2");
+            Intake3 = hardwareMap.get(Servo.class, "Intake3");
             // Check config for these, they might not be configured right!!!
 
             
