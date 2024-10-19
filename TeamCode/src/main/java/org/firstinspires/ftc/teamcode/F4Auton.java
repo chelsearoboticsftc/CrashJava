@@ -15,19 +15,14 @@ public class F4Auton extends LinearOpMode {
         waitForStart();
 
         Trajectory goforward = drivetrain.trajectoryBuilder(new Pose2d(0, 0, 0))
-                .forward(36)
+                .forward(10)
                 .build();
         drivetrain.followTrajectory(goforward);
 
         Trajectory strafeRight = drivetrain.trajectoryBuilder(new Pose2d(0, 0, 0))
-                .strafeRight(26)
+                .strafeRight(45)
                 .build();
         drivetrain.followTrajectory(strafeRight);
-
-        Trajectory gobackwards = drivetrain.trajectoryBuilder(new Pose2d(0, 0, 0))
-                .back(34)
-                .build();
-        drivetrain.followTrajectory(gobackwards);
 
     }
 }
