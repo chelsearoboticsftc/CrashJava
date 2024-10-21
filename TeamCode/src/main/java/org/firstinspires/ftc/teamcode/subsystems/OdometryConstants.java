@@ -5,9 +5,9 @@ import com.qualcomm.hardware.digitalchickenlabs.OctoQuadBase;
 
 public class OdometryConstants {
 
-    public static final int ODO_LEFT      = 0;
-    public static final int ODO_RIGHT     = 1;
-    public static final int ODO_CENTER    = 2;
+    public static final int ODO_LEFT      = 2;
+    public static final int ODO_RIGHT     = 0;
+    public static final int ODO_CENTER    = 1;
 
     public static final OctoQuadBase.EncoderDirection ODO_LEFT_DIRECTION =
                                                     OctoQuadBase.EncoderDirection.FORWARD;

@@ -17,12 +17,12 @@ public class Odometry {
     public void init(){
         // Reverse the count-direction of any encoder that is not what you require.
         // e.g. if you push the robot forward and the left encoder counts down, then reverse it so it counts up.
-        octoquad.setSingleEncoderDirection(OdometryConstants.ODO_LEFT,
-                                                    OdometryConstants.ODO_LEFT_DIRECTION);
         octoquad.setSingleEncoderDirection(OdometryConstants.ODO_RIGHT,
                                                     OdometryConstants.ODO_RIGHT_DIRECTION);
         octoquad.setSingleEncoderDirection(OdometryConstants.ODO_CENTER,
                                                     OdometryConstants.ODO_CENTER_DIRECTION);
+        octoquad.setSingleEncoderDirection(OdometryConstants.ODO_LEFT,
+                                                    OdometryConstants.ODO_LEFT_DIRECTION);
 
         // Any changes that are made should be saved in FLASH just in case there is a sensor power glitch.
         octoquad.saveParametersToFlash();
