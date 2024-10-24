@@ -47,8 +47,8 @@ public class LocalizationTest extends LinearOpMode {
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.addData("Measured X Velocity", currentXVelocity);
             telemetry.addData("Measured Y Velocity", currentYVelocity);
-            telemetry.addData("Commmanded X Velocity",
-                    DriveConstants.rpmToVelocity(-gamepad1.left_stick_y*DriveConstants.MAX_RPM));
+            telemetry.addData("Commanded X Velocity",
+                    DriveConstants.rpmToVelocity(-gamepad1.left_stick_y*0.5*DriveConstants.MAX_RPM));
             telemetry.update();
         }
     }
