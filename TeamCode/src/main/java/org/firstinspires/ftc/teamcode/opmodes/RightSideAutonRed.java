@@ -39,6 +39,7 @@ public class RightSideAutonRed extends LinearOpMode {
                 .forward(53)
                 //Neutral sample 3
                 .strafeRight(5)
+                .back(48)
                 .build();
 
             waitForStart();
