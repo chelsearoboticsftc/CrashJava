@@ -23,4 +23,4 @@ public class CrashAutonBlueRight extends LinearOpMode {
 
         drivetrain.setPoseEstimate(startingPose);
 
-        TrajectorySequence smurfNeutralSamples = drivetrain.trajectorySequenceBuilder(startingPose)
+        TrajectorySequence CrashAutonBlueRight= drivetrain.trajectorySequenceBuilder(startingPose);
