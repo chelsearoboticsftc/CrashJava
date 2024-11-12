@@ -109,4 +109,10 @@ public class StandardTrackingWheelLocalizer extends ThreeTrackingWheelLocalizer 
                 encoderTicksToInches(frontVel)*Y_MULTIPLIER
         );
     }
+
+    private class Updated {
+    }
+
+    private class Stashed {
+    }
 }
