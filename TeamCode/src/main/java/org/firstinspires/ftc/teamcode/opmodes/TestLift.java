@@ -39,6 +39,8 @@ public class TestLift extends LinearOpMode {
             telemetry.addData("liftPosition", liftPosition);
             telemetry.addData("liftVelocity", liftVelocity);
             telemetry.addData("liftMaxVelocity", liftMaxVelocity);
+            telemetry.addData("clawPosition", claw.getClawPosition());
+            telemetry.addData("rotationPosition", claw.getRotationPosition());
             telemetry.update();
         }
     }
