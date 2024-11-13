@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.ClawConstants;
+
 @TeleOp
 public class TestLift extends LinearOpMode {
 
@@ -32,8 +34,22 @@ public class TestLift extends LinearOpMode {
                 liftMaxVelocity = Math.abs(liftVelocity);
             } */
 
-            if (gamepad2.b) {
-                claw.setLiftPosition(1200);
+            if (gamepad2.y) {
+                claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
+            }else if(gamepad2.a){
+                claw.setLiftPosition(ClawConstants.LIFT_MIN_POSITION);
+            }
+
+            if(gamepad2.x){
+                claw.setClawPosition(ClawConstants.CLAW_OPEN);
+            }else if(gamepad2.b){
+                claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+            }
+
+            if(gamepad2.right_bumper){
+                claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
+            }else if(gamepad2.left_bumper){
+                claw.setRotationPosition(ClawConstants.ROTATION_UP);
             }
 
             telemetry.addData("liftPosition", liftPosition);
