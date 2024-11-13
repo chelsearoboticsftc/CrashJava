@@ -25,20 +25,19 @@ public class RightSideAutonRed extends LinearOpMode {
         drivetrain.setPoseEstimate(startingPose);
         //I will work on recording what we want for our right side auton in more detail, which we will put here. 
         TrajectorySequence RightSideAuton = drivetrain.trajectorySequenceBuilder(startingPose)
-                .splineToConstantHeading(wayPoint1,Math.toRadians(270))
-                //Deliver specimen to bar
-                .strafeRight(29)
-                .forward(15)
+                .forward(5)
+                .strafeRight(24)
+                .forward(46)
                 //Neutral sample 1
-                .strafeRight(14)
-                .back(52)
-                .forward(53)
+                .strafeRight(10)
+                .back(48)
+                .forward(48)
                 //Neutral sample 2
-                .strafeRight(5)
-                .back(53)
-                .forward(53)
+                .strafeRight(8)
+                .back(49)
+                .forward(49)
                 //Neutral sample 3
-                .strafeRight(5)
+                .strafeRight(6)
                 .back(48)
                 .build();
 

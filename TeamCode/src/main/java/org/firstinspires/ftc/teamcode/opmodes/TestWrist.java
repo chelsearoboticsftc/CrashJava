@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeConstants;
 
 @TeleOp
-public class TestWrist extends LinearOpMode {
+public class   TestWrist extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
