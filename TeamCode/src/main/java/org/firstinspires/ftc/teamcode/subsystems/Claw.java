@@ -33,8 +33,6 @@ public class Claw {
         liftMotor.setPositionPIDFCoefficients(ClawConstants.LIFT_POSITION_P);
         //Reset Encoder Counts
         liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //Set motor control type
-        //wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void init(){
@@ -62,6 +60,14 @@ public class Claw {
     public void setLiftMotorPower(double power){
         liftMotor.setPower(power);
         liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void setClawPosition(double position){
+        claw.setPosition(position);
+    }
+
+    public void setRotationPosition(double position){
+        rotation.setPosition(position);
     }
 
 }
