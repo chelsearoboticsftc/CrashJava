@@ -78,4 +78,8 @@ public class Claw {
         rotation.setPosition(position);
     }
 
+    public boolean isLiftBusy(){
+        return liftMotor.isBusy();
+    }
+
 }
