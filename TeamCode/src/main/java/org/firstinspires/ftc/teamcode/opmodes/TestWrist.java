@@ -46,6 +46,12 @@ public class   TestWrist extends LinearOpMode {
                 intake.setLinearSlidePower(0);
             }
 
+            if(gamepad2.b){
+                intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+            }else if(gamepad2.x){
+                intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+            }
+
             if(Math.abs(intake.getLinearSlideVelocity())>maxSlideVelocity){
                 maxSlideVelocity = Math.abs(intake.getLinearSlideVelocity());
             }
