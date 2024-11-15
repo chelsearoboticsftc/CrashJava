@@ -24,10 +24,10 @@ public class   TestWrist extends LinearOpMode {
 
             wristPosition = intake.getWristPosition();
 
-            if(gamepad2.y){
-                intake.setWristPosition(100);
+            if(gamepad2.b){
+                intake.setWristPosition(150);
             }else if(gamepad2.a){
-                intake.setWristPosition(0);
+                intake.setWristPosition(10);
             }else{
                 //Do nothing!
             }
@@ -37,6 +37,27 @@ public class   TestWrist extends LinearOpMode {
                 intake.setIntakeState(IntakeConstants.IntakeState.OFF);
             }
 
+<<<<<<< Updated upstream
+=======
+            if(gamepad2.right_trigger>0.2){
+                intake.setLinearSlidePower(0.8);
+            }else if(gamepad2.left_trigger>0.2){
+                intake.setLinearSlidePower(-0.8);
+            }else{
+                intake.setLinearSlidePower(0);
+            }
+
+            if(gamepad2.y){
+                intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+            }else if(gamepad2.x){
+                intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+            }
+
+            if(Math.abs(intake.getLinearSlideVelocity())>maxSlideVelocity){
+                maxSlideVelocity = Math.abs(intake.getLinearSlideVelocity());
+            }
+
+>>>>>>> Stashed changes
             telemetry.addData("Wrist Position", wristPosition);
             telemetry.update();
         }

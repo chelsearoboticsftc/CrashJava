@@ -18,6 +18,9 @@ public class HighBasketAutoRed extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
         Pose2d startingPose = new Pose2d(-51,-54,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(0));
+        Pose2d samplegrab1 = new Pose2d(-47,-39, 0);
+        Pose2d deliveryPos = new Pose2d(-62,-62, 45);
+        Pose2d samplegrab2 = new Pose2d(-58, -39, 0);
         TrajectorySequence deliverSample1 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
                 .back(7)
@@ -27,6 +30,17 @@ public class HighBasketAutoRed extends LinearOpMode {
                 .splineToLinearHeading(parkingPose,Math.toRadians(0))
                 .build();
 
+        TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(samplegrab1)
+                        .splineToLinearHeading(samplegrab1, Math.toRadians(0))
+                                .build();
+
+        TrajectorySequence samplegrab2Traj = drivetrain.trajectorySequenceBuilder(samplegrab2)
+                .splineToLinearHeading(samplegrab2, Math.toRadians(0))
+                .build();
+
+        TrajectorySequence deliveryPosMove = drivetrain.trajectorySequenceBuilder(deliveryPos)
+                .splineToLinearHeading(samplegrab2, Math.toRadians(0))
+                .build();
         drivetrain.setPoseEstimate(startingPose);
 
         waitForStart();
@@ -68,6 +82,11 @@ public class HighBasketAutoRed extends LinearOpMode {
             telemetry.update();
         }
 
+        drivetrain.followTrajectorySequence(samplegrab1Traj);
+        //
+        drivetrain.followTrajectorySequence(deliveryPosMove);
+        drivetrain.followTrajectorySequence(samplegrab2Traj);
+        drivetrain.followTrajectorySequence(deliveryPosMove);
         drivetrain.followTrajectorySequence(parkTrajectory);
 
         //while(opModeIsActive()){
