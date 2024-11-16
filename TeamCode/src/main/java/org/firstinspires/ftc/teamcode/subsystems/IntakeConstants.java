@@ -14,6 +14,17 @@ public class IntakeConstants {
     final static public double WRIST_POSITION_P = 20.0;
     final static public double WRIST_SPEED_TICKS_PER_S = 250;
     final static public int    WRIST_DELIVER_POS = 100;
+    //Slide Motor
+    final static public DcMotor.ZeroPowerBehavior SLIDE_ZERO_POWER_MODE = DcMotor.ZeroPowerBehavior.BRAKE;
+    final static public DcMotorSimple.Direction SLIDE_MOTOR_DIRECTION = DcMotorSimple.Direction.REVERSE;
+    final static public double  SLIDE_VELOCITY_P = 0.0;
+    final static public double  SLIDE_I = 0.5;
+    final static public double  SLIDE_D = 0.0;
+    final static public double  SLIDE_F = 0.0;
+    final static public double  SLIDE_POSITION_P = 20.0;
+    final static public double  SLIDE_SPEED_TICKS_PER_S = 2240;
+    final static public int     SLIDE_OUT_POS = 100;
+    final static public int     SLIDE_IN_POS = 0;
     //Servos
     final static DcMotorSimple.Direction LEFT_INTAKE_DIR = DcMotorSimple.Direction.REVERSE;
     final static DcMotorSimple.Direction RIGHT_INTAKE_DIR = DcMotorSimple.Direction.FORWARD;

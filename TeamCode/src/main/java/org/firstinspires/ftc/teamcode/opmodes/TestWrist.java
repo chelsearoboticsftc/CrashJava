@@ -15,6 +15,7 @@ public class   TestWrist extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         int wristPosition;
+        double maxSlideVelocity = 0;
 
         Intake intake = new Intake(hardwareMap);
 
@@ -24,10 +25,10 @@ public class   TestWrist extends LinearOpMode {
 
             wristPosition = intake.getWristPosition();
 
-            if(gamepad2.b){
-                intake.setWristPosition(150);
+            if(gamepad2.y){
+                intake.setWristPosition(100);
             }else if(gamepad2.a){
-                intake.setWristPosition(10);
+                intake.setWristPosition(0);
             }else{
                 //Do nothing!
             }
@@ -45,7 +46,7 @@ public class   TestWrist extends LinearOpMode {
                 intake.setLinearSlidePower(0);
             }
 
-            if(gamepad2.y){
+            if(gamepad2.b){
                 intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
             }else if(gamepad2.x){
                 intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
@@ -56,6 +57,8 @@ public class   TestWrist extends LinearOpMode {
             }
 
             telemetry.addData("Wrist Position", wristPosition);
+            telemetry.addData("Slide Position", intake.getLinearSlidePosition());
+            telemetry.addData("Max Slide Velocity", maxSlideVelocity);
             telemetry.update();
         }
     }
