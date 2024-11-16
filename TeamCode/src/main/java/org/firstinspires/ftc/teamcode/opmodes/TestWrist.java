@@ -38,13 +38,13 @@ public class   TestWrist extends LinearOpMode {
                 intake.setIntakeState(IntakeConstants.IntakeState.OFF);
             }
 
-            if(gamepad2.right_trigger>0.2){
+            /*if(gamepad2.right_trigger>0.2){
                 intake.setLinearSlidePower(0.8);
             }else if(gamepad2.left_trigger>0.2){
                 intake.setLinearSlidePower(-0.8);
             }else{
                 intake.setLinearSlidePower(0);
-            }
+            }*/
 
             if(gamepad2.b){
                 intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);

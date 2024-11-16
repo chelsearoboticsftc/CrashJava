@@ -18,6 +18,7 @@ public class HighBasketAutoRed extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
         Claw claw = new Claw(hardwareMap);
+        Intake intake = new Intake(hardwareMap);
         Pose2d startingPose = new Pose2d(-44.5,-59,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(0));
         Pose2d samplegrab1 = new Pose2d(-48,-38, Math.toRadians(90));
@@ -67,10 +68,10 @@ public class HighBasketAutoRed extends LinearOpMode {
 
         //Place the preloaded sample
         clawSequence(claw);
-        /*//Go to Sample 1
+        //Go to Sample 1
         drivetrain.followTrajectorySequence(samplegrab1Traj);
         //Pick up sample 1
-        //TODO:Intake code here
+        /*intakeSequence(intake);
         //Deliver sample 1
         drivetrain.followTrajectorySequence(deliverSample1);
         //Place sample 1
@@ -78,7 +79,7 @@ public class HighBasketAutoRed extends LinearOpMode {
         //Go to Sample 2
         drivetrain.followTrajectorySequence(samplegrab2Traj);
         //Pick up sample 2
-        //TODO:Intake code here
+        intakeSequence(intake);
         //Deliver sample 2
         drivetrain.followTrajectorySequence(deliverSample2);
         //Place sample 2
@@ -86,7 +87,7 @@ public class HighBasketAutoRed extends LinearOpMode {
         //Go to Sample 3
         drivetrain.followTrajectorySequence(samplegrab3Traj);
         //Pick up sample 3
-        //TODO:Intake code here
+        intakeSequence(intake);
         //Deliver sample 3
         drivetrain.followTrajectorySequence(deliverSample3);
         //Place sample 3
@@ -101,6 +102,9 @@ public class HighBasketAutoRed extends LinearOpMode {
     }
 
     public void clawSequence(Claw claw){
+
+        claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
             claw.isLiftBusy();
@@ -129,12 +133,13 @@ public class HighBasketAutoRed extends LinearOpMode {
             if(!claw.isLiftBusy()){
                 break;
             }
-            telemetry.addData("position",claw.getLiftPosition());
-            telemetry.update();
+        claw.setClawPosition(ClawConstants.CLAW_OPEN);
         }
     }
 
     public void intakeSequence(Intake intake){
+
+
         while(opModeIsActive()) {
             intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
             intake.setIntakeState(IntakeConstants.IntakeState.IN);
@@ -142,6 +147,25 @@ public class HighBasketAutoRed extends LinearOpMode {
                 break;
             }
         }
+    intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+
+        sleep(1000);
+
+        intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+
+        sleep(800);
+
+        while(opModeIsActive()) {
+            intake.setWristPosition(IntakeConstants.WRIST_IN_POS);
+            sleep(800);
+            intake.setIntakeState(IntakeConstants.IntakeState.OUT);
+            if(!intake.isWristBusy()){
+                break;
+            }
+        }
+
+        intake.setIntakeState(IntakeConstants.IntakeState.OFF);
+
     }
 
 }
