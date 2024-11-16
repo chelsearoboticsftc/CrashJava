@@ -14,7 +14,7 @@ public class ClawConstants {
     final static public double LIFT_POSITION_P = 5.0; //Open to change
     final static public double LIFT_SPEED_TICKS_PER_S = 2240;
     final static public int LIFT_DELIVER_POS = 1400;
-    final static public int LIFT_HOME_POS = 40;
+    final static public int LIFT_HOME_POS = 70;
     final static public int LIFT_MAX_POSITION = 1400;
     final static public int LIFT_MIN_POSITION = 0;
     final static public double CLAW_OPEN = 0.6;

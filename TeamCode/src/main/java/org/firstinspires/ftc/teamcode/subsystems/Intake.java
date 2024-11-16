@@ -15,7 +15,7 @@ public class Intake{
     CRServo rightIntake;
 
     public Intake(HardwareMap hardwareMap){
-        this.linearSlide = hardwareMap.get(DcMotorEx.class, "linearSlide");
+        this.linearSlide = hardwareMap.get(DcMotorEx.class, "slideMotor");
         this.wrist = hardwareMap.get(DcMotorEx.class, "wrist");
         this.leftIntake = hardwareMap.get(CRServo.class,"intake1");
         this.rightIntake = hardwareMap.get(CRServo.class,"intake2");

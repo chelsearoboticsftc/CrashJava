@@ -16,30 +16,43 @@ public class HighBasketAutoRed extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
         Claw claw = new Claw(hardwareMap);
-        Pose2d startingPose = new Pose2d(-51,-54,Math.toRadians(45));
+        Pose2d startingPose = new Pose2d(-44.5,-59,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(0));
-        Pose2d samplegrab1 = new Pose2d(-47,-39, 0);
-        Pose2d deliveryPos = new Pose2d(-62,-62, 45);
-        Pose2d samplegrab2 = new Pose2d(-58, -39, 0);
-        TrajectorySequence deliverSample1 = drivetrain.trajectorySequenceBuilder(startingPose)
+        Pose2d samplegrab1 = new Pose2d(-48,-38, Math.toRadians(90));
+        Pose2d deliveryPos = new Pose2d(-57,-57, Math.toRadians(45));
+        Pose2d samplegrab2 = new Pose2d(-58, -38,Math.toRadians(90));
+        Pose2d samplegrab3 = new Pose2d(-58, -38,Math.toRadians(135));
+        TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
                 .back(7)
                 .build();
 
-        TrajectorySequence parkTrajectory = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
+        /*TrajectorySequence parkTrajectory = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
                 .splineToLinearHeading(parkingPose,Math.toRadians(0))
+                .build();*/
+
+        TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
+                .splineToLinearHeading(samplegrab1, Math.toRadians(90))
                 .build();
 
-        TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
-                        .splineToLinearHeading(samplegrab1, Math.toRadians(0))
-                                .build();
-
-        TrajectorySequence samplegrab2Traj = drivetrain.trajectorySequenceBuilder(samplegrab2)
-                .splineToLinearHeading(samplegrab2, Math.toRadians(0))
+        TrajectorySequence deliverSample1 = drivetrain.trajectorySequenceBuilder(samplegrab1Traj.end())
+                .splineToLinearHeading(deliveryPos, Math.toRadians(45))
                 .build();
 
-        TrajectorySequence deliveryPosMove = drivetrain.trajectorySequenceBuilder(samplegrab1Traj.end())
-                .splineToLinearHeading(samplegrab2, Math.toRadians(0))
+        TrajectorySequence samplegrab2Traj = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
+                .splineToLinearHeading(samplegrab2, Math.toRadians(90))
+                .build();
+
+        TrajectorySequence deliverSample2 = drivetrain.trajectorySequenceBuilder(samplegrab2Traj.end())
+                .splineToLinearHeading(deliveryPos, Math.toRadians(45))
+                .build();
+
+        TrajectorySequence samplegrab3Traj = drivetrain.trajectorySequenceBuilder(deliverSample2.end())
+                .splineToLinearHeading(samplegrab3, Math.toRadians(135))
+                .build();
+
+        TrajectorySequence deliverSample3 = drivetrain.trajectorySequenceBuilder(samplegrab3Traj.end())
+                .splineToLinearHeading(deliveryPos, Math.toRadians(45))
                 .build();
         drivetrain.setPoseEstimate(startingPose);
 
@@ -48,7 +61,7 @@ public class HighBasketAutoRed extends LinearOpMode {
         //Make sure the claw is closed to start
         claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
-        drivetrain.followTrajectorySequence(deliverSample1);
+        drivetrain.followTrajectorySequence(deliverSample0);
 
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
@@ -83,9 +96,25 @@ public class HighBasketAutoRed extends LinearOpMode {
         }
 
         drivetrain.followTrajectorySequence(samplegrab1Traj);
-        drivetrain.followTrajectorySequence(deliveryPosMove);
-        //drivetrain.followTrajectorySequence(samplegrab2Traj);
-        //drivetrain.followTrajectorySequence(deliveryPosMove);
+        //Pick up sample 1
+        //TODO:Intake code here
+        //Deliver sample 1
+        drivetrain.followTrajectorySequence(deliverSample1);
+        //Place sample 1
+        //TODO:Claw Code here
+        drivetrain.followTrajectorySequence(samplegrab2Traj);
+        //Pick up sample 2
+        //TODO:Intake code here
+        //Deliver sample 2
+        drivetrain.followTrajectorySequence(deliverSample2);
+        //Place sample 2
+        //TODO:Claw Code here
+        drivetrain.followTrajectorySequence(samplegrab3Traj);
+        //Pick up sample 3
+        //TODO:Intake code here
+        //Deliver sample 3
+        drivetrain.followTrajectorySequence(deliverSample3);
+
         //drivetrain.followTrajectorySequence(parkTrajectory);
 
         //while(opModeIsActive()){
