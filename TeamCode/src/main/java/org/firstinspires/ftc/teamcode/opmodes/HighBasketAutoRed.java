@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.ClawConstants;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 
@@ -27,9 +29,9 @@ public class HighBasketAutoRed extends LinearOpMode {
                 .back(7)
                 .build();
 
-        /*TrajectorySequence parkTrajectory = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
+        TrajectorySequence parkTrajectory = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
                 .splineToLinearHeading(parkingPose,Math.toRadians(0))
-                .build();*/
+                .build();
 
         TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
                 .splineToLinearHeading(samplegrab1, Math.toRadians(90))
@@ -63,6 +65,42 @@ public class HighBasketAutoRed extends LinearOpMode {
 
         drivetrain.followTrajectorySequence(deliverSample0);
 
+        //Place the preloaded sample
+        clawSequence(claw);
+        /*//Go to Sample 1
+        drivetrain.followTrajectorySequence(samplegrab1Traj);
+        //Pick up sample 1
+        //TODO:Intake code here
+        //Deliver sample 1
+        drivetrain.followTrajectorySequence(deliverSample1);
+        //Place sample 1
+        clawSequence(claw);
+        //Go to Sample 2
+        drivetrain.followTrajectorySequence(samplegrab2Traj);
+        //Pick up sample 2
+        //TODO:Intake code here
+        //Deliver sample 2
+        drivetrain.followTrajectorySequence(deliverSample2);
+        //Place sample 2
+        clawSequence(claw);
+        //Go to Sample 3
+        drivetrain.followTrajectorySequence(samplegrab3Traj);
+        //Pick up sample 3
+        //TODO:Intake code here
+        //Deliver sample 3
+        drivetrain.followTrajectorySequence(deliverSample3);
+        //Place sample 3
+        clawSequence(claw);
+        //drivetrain.followTrajectorySequence(parkTrajectory);*/
+
+        drivetrain.followTrajectorySequence(parkTrajectory);
+
+        //while(opModeIsActive()){
+            //Do nothing, wait for end of Op Mode
+        //}
+    }
+
+    public void clawSequence(Claw claw){
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
             claw.isLiftBusy();
@@ -94,32 +132,16 @@ public class HighBasketAutoRed extends LinearOpMode {
             telemetry.addData("position",claw.getLiftPosition());
             telemetry.update();
         }
+    }
 
-        drivetrain.followTrajectorySequence(samplegrab1Traj);
-        //Pick up sample 1
-        //TODO:Intake code here
-        //Deliver sample 1
-        drivetrain.followTrajectorySequence(deliverSample1);
-        //Place sample 1
-        //TODO:Claw Code here
-        drivetrain.followTrajectorySequence(samplegrab2Traj);
-        //Pick up sample 2
-        //TODO:Intake code here
-        //Deliver sample 2
-        drivetrain.followTrajectorySequence(deliverSample2);
-        //Place sample 2
-        //TODO:Claw Code here
-        drivetrain.followTrajectorySequence(samplegrab3Traj);
-        //Pick up sample 3
-        //TODO:Intake code here
-        //Deliver sample 3
-        drivetrain.followTrajectorySequence(deliverSample3);
-
-        //drivetrain.followTrajectorySequence(parkTrajectory);
-
-        //while(opModeIsActive()){
-            //Do nothing, wait for end of Op Mode
-        //}
+    public void intakeSequence(Intake intake){
+        while(opModeIsActive()) {
+            intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
+            intake.setIntakeState(IntakeConstants.IntakeState.IN);
+            if(!intake.isWristBusy()){
+                break;
+            }
+        }
     }
 
 }

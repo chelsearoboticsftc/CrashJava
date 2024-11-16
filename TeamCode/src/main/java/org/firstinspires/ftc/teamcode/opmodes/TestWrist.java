@@ -26,7 +26,7 @@ public class   TestWrist extends LinearOpMode {
             wristPosition = intake.getWristPosition();
 
             if(gamepad2.y){
-                intake.setWristPosition(100);
+                intake.setWristPosition(150);
             }else if(gamepad2.a){
                 intake.setWristPosition(0);
             }else{

@@ -13,6 +13,7 @@ public class IntakeConstants {
     final static public double WRIST_F = 50.0;
     final static public double WRIST_POSITION_P = 20.0;
     final static public double WRIST_SPEED_TICKS_PER_S = 250;
+    final static public int    WRIST_PICKUP_POS = 150;
     final static public int    WRIST_DELIVER_POS = 100;
     //Slide Motor
     final static public DcMotor.ZeroPowerBehavior SLIDE_ZERO_POWER_MODE = DcMotor.ZeroPowerBehavior.BRAKE;

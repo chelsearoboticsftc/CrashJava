@@ -64,6 +64,10 @@ public class Intake{
         wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    public boolean isWristBusy(){
+        return wrist.isBusy();
+    }
+
     public void setLinearSlidePower(double power){
         linearSlide.setPower(power);
         linearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
