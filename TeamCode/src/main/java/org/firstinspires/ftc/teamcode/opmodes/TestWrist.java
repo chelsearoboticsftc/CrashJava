@@ -37,8 +37,6 @@ public class   TestWrist extends LinearOpMode {
                 intake.setIntakeState(IntakeConstants.IntakeState.OFF);
             }
 
-<<<<<<< Updated upstream
-=======
             if(gamepad2.right_trigger>0.2){
                 intake.setLinearSlidePower(0.8);
             }else if(gamepad2.left_trigger>0.2){
@@ -57,7 +55,6 @@ public class   TestWrist extends LinearOpMode {
                 maxSlideVelocity = Math.abs(intake.getLinearSlideVelocity());
             }
 
->>>>>>> Stashed changes
             telemetry.addData("Wrist Position", wristPosition);
             telemetry.update();
         }

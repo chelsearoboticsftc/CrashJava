@@ -30,7 +30,7 @@ public class HighBasketAutoRed extends LinearOpMode {
                 .splineToLinearHeading(parkingPose,Math.toRadians(0))
                 .build();
 
-        TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(samplegrab1)
+        TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
                         .splineToLinearHeading(samplegrab1, Math.toRadians(0))
                                 .build();
 
@@ -38,7 +38,7 @@ public class HighBasketAutoRed extends LinearOpMode {
                 .splineToLinearHeading(samplegrab2, Math.toRadians(0))
                 .build();
 
-        TrajectorySequence deliveryPosMove = drivetrain.trajectorySequenceBuilder(deliveryPos)
+        TrajectorySequence deliveryPosMove = drivetrain.trajectorySequenceBuilder(samplegrab1Traj.end())
                 .splineToLinearHeading(samplegrab2, Math.toRadians(0))
                 .build();
         drivetrain.setPoseEstimate(startingPose);
@@ -83,11 +83,10 @@ public class HighBasketAutoRed extends LinearOpMode {
         }
 
         drivetrain.followTrajectorySequence(samplegrab1Traj);
-        //
         drivetrain.followTrajectorySequence(deliveryPosMove);
-        drivetrain.followTrajectorySequence(samplegrab2Traj);
-        drivetrain.followTrajectorySequence(deliveryPosMove);
-        drivetrain.followTrajectorySequence(parkTrajectory);
+        //drivetrain.followTrajectorySequence(samplegrab2Traj);
+        //drivetrain.followTrajectorySequence(deliveryPosMove);
+        //drivetrain.followTrajectorySequence(parkTrajectory);
 
         //while(opModeIsActive()){
             //Do nothing, wait for end of Op Mode

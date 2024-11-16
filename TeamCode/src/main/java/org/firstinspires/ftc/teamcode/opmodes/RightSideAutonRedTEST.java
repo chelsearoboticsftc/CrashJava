@@ -18,7 +18,7 @@ public class RightSideAutonRedTEST extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
         Pose2d startingPose = new Pose2d(-51,-54,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(0));
-        Pose2d waypoint = new Pose2d(20,30,0)
+        Pose2d waypoint = new Pose2d(20,30,0);
         TrajectorySequence deliverSample1 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
                 .back(7)
@@ -71,8 +71,9 @@ public class RightSideAutonRedTEST extends LinearOpMode {
 
         TrajectorySequence RightSideAuton = drivetrain.trajectorySequenceBuilder(startingPose)
                 .turn(-45)
-                .splineTo(waypoint)
+                //.splineTo(waypoint)
                 .forward(18)
+                .build();
 
         //while(opModeIsActive()){
         //Do nothing, wait for end of Op Mode
