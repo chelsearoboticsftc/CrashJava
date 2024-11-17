@@ -44,6 +44,7 @@ public class Claw {
     }
 
     public void setLiftPosition(int position){
+        liftMotor.setTargetPositionTolerance(50);
         liftMotor.setTargetPosition(position);
         liftMotor.setVelocity(ClawConstants.LIFT_SPEED_TICKS_PER_S);
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

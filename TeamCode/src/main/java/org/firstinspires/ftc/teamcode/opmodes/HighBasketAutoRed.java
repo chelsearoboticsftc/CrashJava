@@ -21,9 +21,9 @@ public class HighBasketAutoRed extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
         Pose2d startingPose = new Pose2d(-44.5,-59,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(0));
-        Pose2d samplegrab1 = new Pose2d(-48,-38, Math.toRadians(90));
+        Pose2d samplegrab1 = new Pose2d(-48.5,-45, Math.toRadians(90));
         Pose2d deliveryPos = new Pose2d(-57,-57, Math.toRadians(45));
-        Pose2d samplegrab2 = new Pose2d(-58, -38,Math.toRadians(90));
+        Pose2d samplegrab2 = new Pose2d(-58, -45,Math.toRadians(90));
         Pose2d samplegrab3 = new Pose2d(-58, -38,Math.toRadians(135));
         TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
@@ -71,7 +71,7 @@ public class HighBasketAutoRed extends LinearOpMode {
         //Go to Sample 1
         drivetrain.followTrajectorySequence(samplegrab1Traj);
         //Pick up sample 1
-        /*intakeSequence(intake);
+        intakeSequence(intake);
         //Deliver sample 1
         drivetrain.followTrajectorySequence(deliverSample1);
         //Place sample 1
@@ -92,7 +92,6 @@ public class HighBasketAutoRed extends LinearOpMode {
         drivetrain.followTrajectorySequence(deliverSample3);
         //Place sample 3
         clawSequence(claw);
-        //drivetrain.followTrajectorySequence(parkTrajectory);*/
 
         drivetrain.followTrajectorySequence(parkTrajectory);
 
@@ -143,15 +142,29 @@ public class HighBasketAutoRed extends LinearOpMode {
         while(opModeIsActive()) {
             intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
             intake.setIntakeState(IntakeConstants.IntakeState.IN);
+            intake.isWristBusy();
             if(!intake.isWristBusy()){
                 break;
             }
         }
-    intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+        while(opModeIsActive()) {
+            intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+            intake.isSlideBusy();
+            if(!intake.isSlideBusy()){
+                break;
+            }
+        }
+
 
         sleep(1000);
 
-        intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+        while(opModeIsActive()) {
+            intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+            intake.isSlideBusy();
+            if(!intake.isSlideBusy()){
+                break;
+            }
+        }
 
         sleep(800);
 
@@ -159,6 +172,7 @@ public class HighBasketAutoRed extends LinearOpMode {
             intake.setWristPosition(IntakeConstants.WRIST_IN_POS);
             sleep(800);
             intake.setIntakeState(IntakeConstants.IntakeState.OUT);
+            sleep(1200);
             if(!intake.isWristBusy()){
                 break;
             }

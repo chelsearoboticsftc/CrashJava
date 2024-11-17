@@ -73,6 +73,10 @@ public class Intake{
         linearSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    public boolean isSlideBusy(){
+        return linearSlide.isBusy();
+    }
+
     public void setLinearSlidePosition(int position){
         linearSlide.setTargetPosition(position);
         linearSlide.setVelocity(IntakeConstants.SLIDE_SPEED_TICKS_PER_S);
