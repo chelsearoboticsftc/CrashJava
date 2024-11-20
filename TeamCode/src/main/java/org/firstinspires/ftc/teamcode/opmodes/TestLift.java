@@ -22,7 +22,7 @@ public class TestLift extends LinearOpMode {
         while (opModeIsActive()) {
             liftPosition = claw.getLiftPosition();
             liftVelocity = claw.getLiftVelocity();
-            /*
+
             if (gamepad2.y) {
                 claw.setLiftMotorPower(.8);
             } else if (gamepad2.a) {
@@ -32,13 +32,13 @@ public class TestLift extends LinearOpMode {
             }
             if (Math.abs(liftVelocity) > liftMaxVelocity){
                 liftMaxVelocity = Math.abs(liftVelocity);
-            } */
+            }
 
-            if (gamepad2.y) {
+            /*if (gamepad2.y) {
                 claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
             }else if(gamepad2.a){
                 claw.setLiftPosition(ClawConstants.LIFT_MIN_POSITION);
-            }
+            }*/
 
             if(gamepad2.x){
                 claw.setClawPosition(ClawConstants.CLAW_OPEN);

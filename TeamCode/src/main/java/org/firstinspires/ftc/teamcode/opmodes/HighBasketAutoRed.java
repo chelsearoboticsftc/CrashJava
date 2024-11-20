@@ -22,8 +22,8 @@ public class HighBasketAutoRed extends LinearOpMode {
         Pose2d startingPose = new Pose2d(-44.5,-59,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(0));
         Pose2d samplegrab1 = new Pose2d(-48.5,-45, Math.toRadians(90));
-        Pose2d deliveryPos = new Pose2d(-57,-57, Math.toRadians(45));
-        Pose2d samplegrab2 = new Pose2d(-58, -45,Math.toRadians(90));
+        Pose2d deliveryPos = new Pose2d(-59,-59, Math.toRadians(45));
+        Pose2d samplegrab2 = new Pose2d(-62, -45,Math.toRadians(90));
         Pose2d samplegrab3 = new Pose2d(-58, -38,Math.toRadians(135));
         TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
@@ -68,6 +68,8 @@ public class HighBasketAutoRed extends LinearOpMode {
 
         //Place the preloaded sample
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
         //Go to Sample 1
         drivetrain.followTrajectorySequence(samplegrab1Traj);
         //Pick up sample 1
@@ -76,14 +78,18 @@ public class HighBasketAutoRed extends LinearOpMode {
         drivetrain.followTrajectorySequence(deliverSample1);
         //Place sample 1
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
         //Go to Sample 2
         drivetrain.followTrajectorySequence(samplegrab2Traj);
         //Pick up sample 2
-        intakeSequence(intake);
+        intakeSequence(intake); //This is where we are currently running out of time
         //Deliver sample 2
         drivetrain.followTrajectorySequence(deliverSample2);
         //Place sample 2
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
         //Go to Sample 3
         drivetrain.followTrajectorySequence(samplegrab3Traj);
         //Pick up sample 3
@@ -92,6 +98,8 @@ public class HighBasketAutoRed extends LinearOpMode {
         drivetrain.followTrajectorySequence(deliverSample3);
         //Place sample 3
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
 
         drivetrain.followTrajectorySequence(parkTrajectory);
 
@@ -102,7 +110,7 @@ public class HighBasketAutoRed extends LinearOpMode {
 
     public void clawSequence(Claw claw){
 
-        claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+       // claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
@@ -110,53 +118,64 @@ public class HighBasketAutoRed extends LinearOpMode {
             if(!claw.isLiftBusy()){
                 break;
             }
+            telemetry.addData("liftPos", claw.getLiftPosition());
+            telemetry.update();
         }
 
         claw.setRotationPosition(ClawConstants.ROTATION_UP);
         //Wait for wrist servo to move to position
-        sleep(1500);
+       sleep(600);
 
-        claw.setClawPosition(ClawConstants.CLAW_OPEN);
+        //claw.setClawPosition(ClawConstants.CLAW_OPEN);
 
-        sleep( 1000);
+        sleep( 600);
 
-        claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+        //claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
         claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
         //Wait for wrist servo to move to position
-        sleep(1500);
+        sleep(400);
 
+    }
+
+    public void clawDown(Claw claw){
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_HOME_POS);
             claw.isLiftBusy();
             if(!claw.isLiftBusy()){
                 break;
             }
-        claw.setClawPosition(ClawConstants.CLAW_OPEN);
+            //claw.setClawPosition(ClawConstants.CLAW_OPEN);
+        }
+    }
+
+    public void wristOut(Intake intake){
+        while(opModeIsActive()){
+            intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
+            intake.isWristBusy();
+            if(!intake.isWristBusy()){
+                break;
+            }
+
         }
     }
 
     public void intakeSequence(Intake intake){
 
-
-        while(opModeIsActive()) {
-            intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
-            intake.setIntakeState(IntakeConstants.IntakeState.IN);
-            intake.isWristBusy();
-            if(!intake.isWristBusy()){
-                break;
-            }
-        }
         while(opModeIsActive()) {
             intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+            intake.setIntakeState(IntakeConstants.IntakeState.IN);
+            intake.isWristBusy();
             intake.isSlideBusy();
-            if(!intake.isSlideBusy()){
+            if((!intake.isWristBusy())&&
+               (!intake.isSlideBusy())){
                 break;
             }
+            telemetry.addData("slidePos", intake.getLinearSlidePosition());
+            telemetry.update();
         }
 
-
-        sleep(1000);
+        sleep(200);
 
         while(opModeIsActive()) {
             intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
@@ -164,15 +183,17 @@ public class HighBasketAutoRed extends LinearOpMode {
             if(!intake.isSlideBusy()){
                 break;
             }
+            telemetry.addData("slidePos", intake.getLinearSlidePosition());
+            telemetry.update();
         }
 
-        sleep(800);
+        sleep(700);
 
         while(opModeIsActive()) {
             intake.setWristPosition(IntakeConstants.WRIST_IN_POS);
-            sleep(800);
+            sleep(900);
             intake.setIntakeState(IntakeConstants.IntakeState.OUT);
-            sleep(1200);
+            sleep(800);
             if(!intake.isWristBusy()){
                 break;
             }

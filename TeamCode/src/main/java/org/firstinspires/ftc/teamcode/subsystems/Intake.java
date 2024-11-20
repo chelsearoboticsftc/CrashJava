@@ -80,6 +80,7 @@ public class Intake{
     public void setLinearSlidePosition(int position){
         linearSlide.setTargetPosition(position);
         linearSlide.setVelocity(IntakeConstants.SLIDE_SPEED_TICKS_PER_S);
+        linearSlide.setTargetPositionTolerance(50);
         linearSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 

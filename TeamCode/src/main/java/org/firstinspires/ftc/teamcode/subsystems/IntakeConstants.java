@@ -25,7 +25,7 @@ public class IntakeConstants {
     final static public double  SLIDE_F = 12.9004;
     final static public double  SLIDE_POSITION_P = 20.0;
     final static public double  SLIDE_SPEED_TICKS_PER_S = 2240;
-    final static public int     SLIDE_OUT_POS = 1800;
+    final static public int     SLIDE_OUT_POS = 1500;
     final static public int     SLIDE_IN_POS = 0;
     //Servos
     final static DcMotorSimple.Direction LEFT_INTAKE_DIR = DcMotorSimple.Direction.REVERSE;
