@@ -19,19 +19,19 @@ public class HighBasketAutoBlue extends LinearOpMode {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
         Claw claw = new Claw(hardwareMap);
         Intake intake = new Intake(hardwareMap);
-        Pose2d startingPose = new Pose2d(44.5,59,Math.toRadians(135));
-        Pose2d parkingPose = new Pose2d(40,-55,Math.toRadians(180)); //The parking is off right now. It should go to -40, 55 but instead is going off randomly. We are attempting to fix this by changing these coordinates.
-        Pose2d samplegrab1 = new Pose2d(48,38, Math.toRadians(270));
-        Pose2d deliveryPos = new Pose2d(57,57, Math.toRadians(135));
-        Pose2d samplegrab2 = new Pose2d(58, 38,Math.toRadians(270));
-        Pose2d samplegrab3 = new Pose2d(58, 38,Math.toRadians(45));
+        Pose2d startingPose = new Pose2d(44.5,59,Math.toRadians(45));
+        Pose2d parkingPose = new Pose2d(-40,55,Math.toRadians(0));
+        Pose2d samplegrab1 = new Pose2d(48.5,45, Math.toRadians(90));
+        Pose2d deliveryPos = new Pose2d(59,59, Math.toRadians(45));
+        Pose2d samplegrab2 = new Pose2d(62, 45,Math.toRadians(90));
+        Pose2d samplegrab3 = new Pose2d(58, 38,Math.toRadians(135));
         TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
                 .back(7)
                 .build();
 
         TrajectorySequence parkTrajectory = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
-                .splineToLinearHeading(parkingPose,Math.toRadians(180))
+                .splineToLinearHeading(parkingPose,Math.toRadians(0))
                 .build();
 
         TrajectorySequence samplegrab1Traj = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
@@ -68,22 +68,28 @@ public class HighBasketAutoBlue extends LinearOpMode {
 
         //Place the preloaded sample
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
         //Go to Sample 1
-        /*drivetrain.followTrajectorySequence(samplegrab1Traj);
+        drivetrain.followTrajectorySequence(samplegrab1Traj);
         //Pick up sample 1
         intakeSequence(intake);
         //Deliver sample 1
         drivetrain.followTrajectorySequence(deliverSample1);
         //Place sample 1
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
         //Go to Sample 2
         drivetrain.followTrajectorySequence(samplegrab2Traj);
         //Pick up sample 2
-        intakeSequence(intake);
+        intakeSequence(intake); //This is where we are currently running out of time
         //Deliver sample 2
         drivetrain.followTrajectorySequence(deliverSample2);
         //Place sample 2
         clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
         //Go to Sample 3
         drivetrain.followTrajectorySequence(samplegrab3Traj);
         //Pick up sample 3
@@ -91,7 +97,9 @@ public class HighBasketAutoBlue extends LinearOpMode {
         //Deliver sample 3
         drivetrain.followTrajectorySequence(deliverSample3);
         //Place sample 3
-        clawSequence(claw);*/
+        clawSequence(claw);
+        wristOut(intake);
+        clawDown(claw);
 
         drivetrain.followTrajectorySequence(parkTrajectory);
 
@@ -102,7 +110,7 @@ public class HighBasketAutoBlue extends LinearOpMode {
 
     public void clawSequence(Claw claw){
 
-        claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+        // claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
@@ -110,54 +118,82 @@ public class HighBasketAutoBlue extends LinearOpMode {
             if(!claw.isLiftBusy()){
                 break;
             }
+            telemetry.addData("liftPos", claw.getLiftPosition());
+            telemetry.update();
         }
 
         claw.setRotationPosition(ClawConstants.ROTATION_UP);
         //Wait for wrist servo to move to position
-        sleep(1500);
+        sleep(600);
 
-        claw.setClawPosition(ClawConstants.CLAW_OPEN);
+        //claw.setClawPosition(ClawConstants.CLAW_OPEN);
 
-        sleep( 1000);
+        sleep( 600);
 
-        claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+        //claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
         claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
         //Wait for wrist servo to move to position
-        sleep(1500);
+        sleep(400);
 
+    }
+
+    public void clawDown(Claw claw){
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_HOME_POS);
             claw.isLiftBusy();
             if(!claw.isLiftBusy()){
                 break;
             }
-            claw.setClawPosition(ClawConstants.CLAW_OPEN);
+            //claw.setClawPosition(ClawConstants.CLAW_OPEN);
+        }
+    }
+
+    public void wristOut(Intake intake){
+        while(opModeIsActive()){
+            intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
+            intake.isWristBusy();
+            if(!intake.isWristBusy()){
+                break;
+            }
+
         }
     }
 
     public void intakeSequence(Intake intake){
 
-
         while(opModeIsActive()) {
-            intake.setWristPosition(IntakeConstants.WRIST_PICKUP_POS);
+            intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
             intake.setIntakeState(IntakeConstants.IntakeState.IN);
-            if(!intake.isWristBusy()){
+            intake.isWristBusy();
+            intake.isSlideBusy();
+            if((!intake.isWristBusy())&&
+                    (!intake.isSlideBusy())){
                 break;
             }
+            telemetry.addData("slidePos", intake.getLinearSlidePosition());
+            telemetry.update();
         }
-        intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
 
-        sleep(1000);
+        sleep(200);
 
-        intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+        while(opModeIsActive()) {
+            intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+            intake.isSlideBusy();
+            if(!intake.isSlideBusy()){
+                break;
+            }
+            telemetry.addData("slidePos", intake.getLinearSlidePosition());
+            telemetry.update();
+        }
 
-        sleep(800);
+        sleep(700);
 
         while(opModeIsActive()) {
             intake.setWristPosition(IntakeConstants.WRIST_IN_POS);
-            sleep(800);
+            sleep(900);
             intake.setIntakeState(IntakeConstants.IntakeState.OUT);
+            sleep(800);
             if(!intake.isWristBusy()){
                 break;
             }
