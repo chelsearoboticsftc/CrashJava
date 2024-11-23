@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-public class IntakeConstants {
+public class IntakeConstants2 {
     //Wrist Motor
     final static public DcMotor.ZeroPowerBehavior WRIST_ZERO_POWER_MODE = DcMotor.ZeroPowerBehavior.BRAKE;
     final static public DcMotorSimple.Direction WRIST_MOTOR_DIRECTION = DcMotorSimple.Direction.REVERSE;
@@ -25,7 +25,7 @@ public class IntakeConstants {
     final static public double  SLIDE_F = 12.9004;
     final static public double  SLIDE_POSITION_P = 20.0;
     final static public double  SLIDE_SPEED_TICKS_PER_S = 2240;
-    final static public int     SLIDE_OUT_POS = 610;
+    final static public int     SLIDE_OUT_POS = 1000;
     final static public int     SLIDE_IN_POS = 0;
     //Servos
     final static DcMotorSimple.Direction LEFT_INTAKE_DIR = DcMotorSimple.Direction.REVERSE;

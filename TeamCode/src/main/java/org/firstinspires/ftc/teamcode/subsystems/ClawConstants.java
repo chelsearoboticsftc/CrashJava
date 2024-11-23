@@ -19,7 +19,7 @@ public class ClawConstants {
     final static public int LIFT_MIN_POSITION = 0;
     final static public double CLAW_OPEN = 0.5;
     final static public double CLAW_CLOSED = 0.35;
-    final static public double ROTATION_DOWN = 0.96;
+    final static public double ROTATION_DOWN = 1;
     final static public double ROTATION_UP = .25;
 }
 

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 
 @Autonomous
-public class HighBasketAutoRed extends LinearOpMode {
+public class Copy_of_HighBasketAutoRed extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
@@ -57,6 +57,10 @@ public class HighBasketAutoRed extends LinearOpMode {
         TrajectorySequence deliverSample3 = drivetrain.trajectorySequenceBuilder(samplegrab3Traj.end())
                 .splineToLinearHeading(deliveryPos, Math.toRadians(45))
                 .build();
+
+        TrajectorySequence forward = drivetrain.trajectorySequenceBuilder(samplegrab3Traj.end())
+                .forward(5)
+                .build();
         drivetrain.setPoseEstimate(startingPose);
 
         waitForStart();
@@ -70,18 +74,21 @@ public class HighBasketAutoRed extends LinearOpMode {
         clawSequence(claw);
         wristOut(intake);
         clawDown(claw);
-        //Go to Sample 1
-        drivetrain.followTrajectorySequence(samplegrab1Traj);
+        //Go to Sample 1 now turn to sample
+        drivetrain.turn(Math.toRadians(30));
+        //drivetrain.followTrajectorySequence(samplegrab1Traj);
         //Pick up sample 1
+        drivetrain.followTrajectory(forward);
         intakeSequence(intake);
-        //Deliver sample 1
-        drivetrain.followTrajectorySequence(deliverSample1);
+        //Deliver sample 1 turn back
+        drivetrain.turn(Math.toRadians(-45));
+        //drivetrain.followTrajectorySequence(deliverSample1);
         //Place sample 1
         clawSequence(claw);
         wristOut(intake);
         clawDown(claw);
         //Go to Sample 2
-        drivetrain.followTrajectorySequence(samplegrab2Traj);
+        /*drivetrain.followTrajectorySequence(samplegrab2Traj);
         //Pick up sample 2
         intakeSequence(intake); //This is where we are currently running out of time
         //Deliver sample 2
@@ -101,16 +108,16 @@ public class HighBasketAutoRed extends LinearOpMode {
         wristOut(intake);
         clawDown(claw);
 
-        drivetrain.followTrajectorySequence(parkTrajectory);
+        drivetrain.followTrajectorySequence(parkTrajectory); */
 
         //while(opModeIsActive()){
-            //Do nothing, wait for end of Op Mode
+        //Do nothing, wait for end of Op Mode
         //}
     }
 
     public void clawSequence(Claw claw){
 
-       // claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+        // claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
@@ -124,7 +131,7 @@ public class HighBasketAutoRed extends LinearOpMode {
 
         claw.setRotationPosition(ClawConstants.ROTATION_UP);
         //Wait for wrist servo to move to position
-       sleep(600);
+        sleep(600);
 
         //claw.setClawPosition(ClawConstants.CLAW_OPEN);
 
@@ -168,7 +175,7 @@ public class HighBasketAutoRed extends LinearOpMode {
             intake.isWristBusy();
             intake.isSlideBusy();
             if((!intake.isWristBusy())&&
-               (!intake.isSlideBusy())){
+                    (!intake.isSlideBusy())){
                 break;
             }
             telemetry.addData("slidePos", intake.getLinearSlidePosition());

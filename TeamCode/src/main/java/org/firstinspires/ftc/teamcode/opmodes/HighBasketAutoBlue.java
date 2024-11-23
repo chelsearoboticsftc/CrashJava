@@ -21,8 +21,8 @@ public class HighBasketAutoBlue extends LinearOpMode {
         Intake intake = new Intake(hardwareMap);
         Pose2d startingPose = new Pose2d(44.5,59,Math.toRadians(45));
         Pose2d parkingPose = new Pose2d(-40,55,Math.toRadians(0));
-        Pose2d samplegrab1 = new Pose2d(48.5,45, Math.toRadians(90));
-        Pose2d deliveryPos = new Pose2d(59,59, Math.toRadians(45));
+        Pose2d samplegrab1 = new Pose2d(48.5,43, Math.toRadians(90));
+        Pose2d deliveryPos = new Pose2d(56.8,56.8, Math.toRadians(45));
         Pose2d samplegrab2 = new Pose2d(62, 45,Math.toRadians(90));
         Pose2d samplegrab3 = new Pose2d(58, 38,Math.toRadians(135));
         TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
@@ -187,11 +187,11 @@ public class HighBasketAutoBlue extends LinearOpMode {
             telemetry.update();
         }
 
-        sleep(700);
+        sleep(200);
 
         while(opModeIsActive()) {
             intake.setWristPosition(IntakeConstants.WRIST_IN_POS);
-            sleep(900);
+            sleep(1300);
             intake.setIntakeState(IntakeConstants.IntakeState.OUT);
             sleep(800);
             if(!intake.isWristBusy()){
