@@ -63,12 +63,12 @@ public class FrogAutoINPROG extends LinearOpMode {
                 .build();
 
         TrajectorySequence turn2 = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
-                .turn(Math.toRadians(10))
+                .turn(Math.toRadians(50))
                 .forward(6)
                 .build();
 
         TrajectorySequence turn3 = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
-                .turn(Math.toRadians(-10))
+                .turn(Math.toRadians(70))
                 .forward(6)
                 .build();
         drivetrain.setPoseEstimate(startingPose);
