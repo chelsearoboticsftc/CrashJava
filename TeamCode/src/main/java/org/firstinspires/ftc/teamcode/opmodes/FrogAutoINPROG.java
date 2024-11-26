@@ -10,10 +10,9 @@ import org.firstinspires.ftc.teamcode.subsystems.ClawConstants;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 
 @Autonomous
-public class HighBasketAutoRed extends LinearOpMode {
+public class FrogAutoINPROG extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
@@ -57,6 +56,21 @@ public class HighBasketAutoRed extends LinearOpMode {
         TrajectorySequence deliverSample3 = drivetrain.trajectorySequenceBuilder(samplegrab3Traj.end())
                 .splineToLinearHeading(deliveryPos, Math.toRadians(45))
                 .build();
+
+        TrajectorySequence turn1 = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
+                .turn(Math.toRadians(30))
+                .forward(6)
+                .build();
+
+        TrajectorySequence turn2 = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
+                .turn(Math.toRadians(10))
+                .forward(6)
+                .build();
+
+        TrajectorySequence turn3 = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
+                .turn(Math.toRadians(-10))
+                .forward(6)
+                .build();
         drivetrain.setPoseEstimate(startingPose);
 
         waitForStart();
@@ -70,29 +84,33 @@ public class HighBasketAutoRed extends LinearOpMode {
         clawSequence(claw);
         wristOut(intake);
         clawDown(claw);
-        //Go to Sample 1
-        drivetrain.followTrajectorySequence(samplegrab1Traj);
+        //Go to Sample 1 now turn to sample 30 deg
+        //drivetrain.turn(Math.toRadians(30));
+        //drivetrain.followTrajectorySequence(samplegrab1Traj);
         //Pick up sample 1
+        drivetrain.followTrajectorySequence(turn1);
         intakeSequence(intake);
-        //Deliver sample 1
+        //Deliver sample 1 turn back
         drivetrain.followTrajectorySequence(deliverSample1);
         //Place sample 1
         clawSequence(claw);
         wristOut(intake);
         clawDown(claw);
-        //Go to Sample 2
-        drivetrain.followTrajectorySequence(samplegrab2Traj);
+        //Go to Sample 2 turn now 20 deg
+        //drivetrain.followTrajectorySequence(samplegrab2Traj);
         //Pick up sample 2
-        intakeSequence(intake); //This is where we are currently running out of time
-        //Deliver sample 2
+        drivetrain.followTrajectorySequence(turn2);
+        intakeSequence(intake); //This is where we are currently running out of time (NOT ANYMORE!!!)
+        //Deliver sample 2 now turn back 20 deg
         drivetrain.followTrajectorySequence(deliverSample2);
         //Place sample 2
         clawSequence(claw);
         wristOut(intake);
         clawDown(claw);
-        //Go to Sample 3
-        drivetrain.followTrajectorySequence(samplegrab3Traj);
+        //Go to Sample 3 now turn 20 deg
+        //drivetrain.followTrajectorySequence(samplegrab3Traj);
         //Pick up sample 3
+        drivetrain.followTrajectorySequence(turn3);
         intakeSequence(intake);
         //Deliver sample 3
         drivetrain.followTrajectorySequence(deliverSample3);
@@ -104,13 +122,13 @@ public class HighBasketAutoRed extends LinearOpMode {
         drivetrain.followTrajectorySequence(parkTrajectory);
 
         //while(opModeIsActive()){
-            //Do nothing, wait for end of Op Mode
+        //Do nothing, wait for end of Op Mode
         //}
     }
 
     public void clawSequence(Claw claw){
 
-       // claw.setClawPosition(ClawConstants.CLAW_CLOSED);
+        // claw.setClawPosition(ClawConstants.CLAW_CLOSED);
 
         while(opModeIsActive()){
             claw.setLiftPosition(ClawConstants.LIFT_DELIVER_POS);
@@ -124,7 +142,7 @@ public class HighBasketAutoRed extends LinearOpMode {
 
         claw.setRotationPosition(ClawConstants.ROTATION_UP);
         //Wait for wrist servo to move to position
-       sleep(600);
+        sleep(600);
 
         //claw.setClawPosition(ClawConstants.CLAW_OPEN);
 
@@ -163,19 +181,19 @@ public class HighBasketAutoRed extends LinearOpMode {
     public void intakeSequence(Intake intake){
 
         while(opModeIsActive()) {
-            intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+            intake.setLinearSlidePosition(800);
             intake.setIntakeState(IntakeConstants.IntakeState.IN);
             intake.isWristBusy();
             intake.isSlideBusy();
             if((!intake.isWristBusy())&&
-               (!intake.isSlideBusy())){
+                    (!intake.isSlideBusy())){
                 break;
             }
             telemetry.addData("slidePos", intake.getLinearSlidePosition());
             telemetry.update();
         }
 
-        sleep(200);
+        sleep(300);
 
         while(opModeIsActive()) {
             intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);

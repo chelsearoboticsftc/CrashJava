@@ -24,7 +24,7 @@ public class HighBasketAutoBlue extends LinearOpMode {
         Pose2d samplegrab1 = new Pose2d(48.5,43, Math.toRadians(90));
         Pose2d deliveryPos = new Pose2d(56.8,56.8, Math.toRadians(45));
         Pose2d samplegrab2 = new Pose2d(62, 45,Math.toRadians(90));
-        Pose2d samplegrab3 = new Pose2d(58, 38,Math.toRadians(135));
+        Pose2d samplegrab3 = new Pose2d(58,38,Math.toRadians(135));
         TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
                 .strafeLeft(12)
                 .back(7)
