@@ -25,8 +25,9 @@ public class FrogAutoINPROG extends LinearOpMode {
         Pose2d samplegrab2 = new Pose2d(-62, -45,Math.toRadians(90));
         Pose2d samplegrab3 = new Pose2d(-58, -38,Math.toRadians(135));
         TrajectorySequence deliverSample0 = drivetrain.trajectorySequenceBuilder(startingPose)
-                .strafeLeft(12)
-                .back(7)
+                //.strafeLeft(12)
+                //.back(7)
+                .splineToLinearHeading(deliveryPos,Math.toRadians(45))
                 .build();
 
         TrajectorySequence parkTrajectory = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
@@ -76,8 +77,7 @@ public class FrogAutoINPROG extends LinearOpMode {
         waitForStart();
 
         //Make sure the claw is closed to start
-        claw.setClawPosition(ClawConstants.CLAW_CLOSED);
-
+        //claw.setClawPosition(ClawConstants.CLAW_CLOSED);
         drivetrain.followTrajectorySequence(deliverSample0);
 
         //Place the preloaded sample
@@ -181,12 +181,12 @@ public class FrogAutoINPROG extends LinearOpMode {
     public void intakeSequence(Intake intake){
 
         while(opModeIsActive()) {
-            intake.setLinearSlidePosition(800);
+            intake.setLinearSlidePosition(750);
             intake.setIntakeState(IntakeConstants.IntakeState.IN);
             intake.isWristBusy();
             intake.isSlideBusy();
             if((!intake.isWristBusy())&&
-                    (!intake.isSlideBusy())){
+               (!intake.isSlideBusy())){
                 break;
             }
             telemetry.addData("slidePos", intake.getLinearSlidePosition());

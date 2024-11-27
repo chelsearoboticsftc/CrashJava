@@ -61,6 +61,7 @@ public class Intake{
     public void setWristPosition(int position){
         wrist.setTargetPosition(position);
         wrist.setVelocity(IntakeConstants.WRIST_SPEED_TICKS_PER_S);
+        wrist.setTargetPositionTolerance(20);
         wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
