@@ -54,6 +54,8 @@ public class Claw {
         return liftMotor.getCurrentPosition();
     }
 
+    public int getLiftTargetPosition() {return liftMotor.getTargetPosition();};
+
     public double getClawPosition(){
         return claw.getPosition();
     }

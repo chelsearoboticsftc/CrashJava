@@ -107,8 +107,16 @@ public class Intake{
         return wrist.getCurrentPosition();
     }
 
+    public int getWristTargetPosition(){
+        return wrist.getTargetPosition();
+    }
+
     public int getLinearSlidePosition(){
         return linearSlide.getCurrentPosition();
+    }
+
+    public int getLinearSlideTargetPosition(){
+        return linearSlide.getTargetPosition();
     }
 
     public double getLinearSlideVelocity(){
