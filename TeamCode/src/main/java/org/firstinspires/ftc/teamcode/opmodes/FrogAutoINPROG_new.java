@@ -51,7 +51,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
 
     //Define wait times and a timer object
     ElapsedTime waitTimer = new ElapsedTime();
-    double rotateUpTime = .5;
+    double rotateUpTime = 1;
     double rotateDownTime = .5;
     double handOffSampleTime = .5;
 
@@ -75,10 +75,11 @@ public class FrogAutoINPROG_new extends LinearOpMode {
         double turnAngle1 = Math.toRadians(30);
         double turnAngle2 = Math.toRadians(50);
         double turnAngle3 = Math.toRadians(70);
+        double forwardDist = 10;
 
         TrajectorySequence turn1 = drivetrain.trajectorySequenceBuilder(deliverSample0.end())
                 .turn(turnAngle1)
-                .forward(6)
+                .forward(forwardDist)
                 .build();
 
         TrajectorySequence deliverSample1 = drivetrain.trajectorySequenceBuilder(turn1.end())
@@ -88,7 +89,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
 
         TrajectorySequence turn2 = drivetrain.trajectorySequenceBuilder(deliverSample1.end())
                 .turn(turnAngle2)
-                .forward(6)
+                .forward(forwardDist)
                 .build();
 
         TrajectorySequence deliverSample2 = drivetrain.trajectorySequenceBuilder(turn2.end())
@@ -97,7 +98,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
 
         TrajectorySequence turn3 = drivetrain.trajectorySequenceBuilder(deliverSample2.end())
                 .turn(turnAngle3)
-                .forward(6)
+                .forward(forwardDist)
                 .build();
 
         TrajectorySequence deliverSample3 = drivetrain.trajectorySequenceBuilder(turn3.end())
@@ -120,23 +121,23 @@ public class FrogAutoINPROG_new extends LinearOpMode {
         targetWristPosition = IntakeConstants.WRIST_IN_POS;
 
         //Set state machine to first state
+        currentState = State.DELIVER_SAMPLE_0;
 
-        while((opModeIsActive()) && (!isStopRequested())){
+        while((opModeIsActive()) && (!isStopRequested())) {
             //Main loop, will run until the end of autonomous, regardless of state machine state.
-            switch(currentState){
+            switch (currentState) {
                 //Preloaded Sample
                 case DELIVER_SAMPLE_0:
-                    if((!drivetrain.isBusy())&&
-                       (!claw.isLiftBusy()))
-                    {
+                    if ((!drivetrain.isBusy()) &&
+                            (!claw.isLiftBusy())) {
                         //Rotate the claw up and wait for the move
                         claw.setRotationPosition(ClawConstants.ROTATION_UP);
                         waitTimer.reset();
-                        currentState = State.ROTATE_UP_1;
+                        currentState = State.ROTATE_UP_0;
                     }
                     break;
                 case ROTATE_UP_0:
-                    if(waitTimer.seconds() >= rotateUpTime){
+                    if (waitTimer.seconds() >= rotateUpTime) {
                         //Rotate the claw down and wait for the move
                         claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
                         waitTimer.reset();
@@ -144,7 +145,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case ROTATE_DOWN_0:
-                    if(waitTimer.seconds() >= rotateDownTime){
+                    if (waitTimer.seconds() >= rotateDownTime) {
                         //Lower the lift, extend the intake, and start turn/move sequence
                         targetLiftPosition = ClawConstants.LIFT_HOME_POS;
                         targetSlidePosition = IntakeConstants.SLIDE_OUT_POS;
@@ -156,11 +157,10 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     break;
                 //Sample 1
                 case GRAB_SAMPLE_1:
-                    if((!drivetrain.isBusy())  &&
-                       (!claw.isLiftBusy())    &&
-                       (!intake.isSlideBusy()) &&
-                       (!intake.isWristBusy()))
-                    {
+                    if ((!drivetrain.isBusy()) &&
+                            (!claw.isLiftBusy()) &&
+                            (!intake.isSlideBusy()) &&
+                            (!intake.isWristBusy())) {
                         //Bring the intake in and move to the deliver position (we either have the
                         //sample or we don't!)
                         targetWristPosition = IntakeConstants.WRIST_IN_POS;
@@ -170,10 +170,9 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case DELIVER_SAMPLE_1:
-                    if((!drivetrain.isBusy())  &&
-                       (!intake.isSlideBusy()) &&
-                       (!intake.isWristBusy()))
-                    {
+                    if ((!drivetrain.isBusy()) &&
+                            (!intake.isSlideBusy()) &&
+                            (!intake.isWristBusy())) {
                         //Dump the sample into the claw and then wait
                         intake.setIntakeState(IntakeConstants.IntakeState.OUT);
                         waitTimer.reset();
@@ -181,21 +180,21 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case HAND_OFF_1:
-                    if(waitTimer.seconds() >= handOffSampleTime){
+                    if (waitTimer.seconds() >= handOffSampleTime) {
                         intake.setIntakeState(IntakeConstants.IntakeState.OFF);
                         targetLiftPosition = ClawConstants.LIFT_DELIVER_POS;
                         currentState = State.RAISE_SAMPLE_1;
                     }
                     break;
                 case RAISE_SAMPLE_1:
-                    if(!claw.isLiftBusy()){
+                    if (!claw.isLiftBusy()) {
                         claw.setRotationPosition(ClawConstants.ROTATION_UP);
                         waitTimer.reset();
                         currentState = State.ROTATE_UP_1;
                     }
                     break;
                 case ROTATE_UP_1:
-                    if(waitTimer.seconds() >= rotateUpTime){
+                    if (waitTimer.seconds() >= rotateUpTime) {
                         //Rotate the claw down and wait for the move
                         claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
                         waitTimer.reset();
@@ -203,7 +202,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case ROTATE_DOWN_1:
-                    if(waitTimer.seconds() >= rotateDownTime){
+                    if (waitTimer.seconds() >= rotateDownTime) {
                         //Lower the lift, extend the intake, and start turn/move sequence
                         targetLiftPosition = ClawConstants.LIFT_HOME_POS;
                         targetSlidePosition = IntakeConstants.SLIDE_OUT_POS;
@@ -215,11 +214,10 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     break;
                 //Sample 2
                 case GRAB_SAMPLE_2:
-                    if((!drivetrain.isBusy())  &&
-                            (!claw.isLiftBusy())    &&
+                    if ((!drivetrain.isBusy()) &&
+                            (!claw.isLiftBusy()) &&
                             (!intake.isSlideBusy()) &&
-                            (!intake.isWristBusy()))
-                    {
+                            (!intake.isWristBusy())) {
                         //Bring the intake in and move to the deliver position (we either have the
                         //sample or we don't!)
                         targetWristPosition = IntakeConstants.WRIST_IN_POS;
@@ -229,10 +227,9 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case DELIVER_SAMPLE_2:
-                    if((!drivetrain.isBusy())  &&
+                    if ((!drivetrain.isBusy()) &&
                             (!intake.isSlideBusy()) &&
-                            (!intake.isWristBusy()))
-                    {
+                            (!intake.isWristBusy())) {
                         //Dump the sample into the claw and then wait
                         intake.setIntakeState(IntakeConstants.IntakeState.OUT);
                         waitTimer.reset();
@@ -240,21 +237,21 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case HAND_OFF_2:
-                    if(waitTimer.seconds() >= handOffSampleTime){
+                    if (waitTimer.seconds() >= handOffSampleTime) {
                         intake.setIntakeState(IntakeConstants.IntakeState.OFF);
                         targetLiftPosition = ClawConstants.LIFT_DELIVER_POS;
                         currentState = State.RAISE_SAMPLE_2;
                     }
                     break;
                 case RAISE_SAMPLE_2:
-                    if(!claw.isLiftBusy()){
+                    if (!claw.isLiftBusy()) {
                         claw.setRotationPosition(ClawConstants.ROTATION_UP);
                         waitTimer.reset();
                         currentState = State.ROTATE_UP_2;
                     }
                     break;
                 case ROTATE_UP_2:
-                    if(waitTimer.seconds() >= rotateUpTime){
+                    if (waitTimer.seconds() >= rotateUpTime) {
                         //Rotate the claw down and wait for the move
                         claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
                         waitTimer.reset();
@@ -262,7 +259,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case ROTATE_DOWN_2:
-                    if(waitTimer.seconds() >= rotateDownTime){
+                    if (waitTimer.seconds() >= rotateDownTime) {
                         //Lower the lift, extend the intake, and start turn/move sequence
                         targetLiftPosition = ClawConstants.LIFT_HOME_POS;
                         targetSlidePosition = IntakeConstants.SLIDE_OUT_POS;
@@ -274,11 +271,10 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     break;
                 //Sample 3
                 case GRAB_SAMPLE_3:
-                    if((!drivetrain.isBusy())  &&
-                            (!claw.isLiftBusy())    &&
+                    if ((!drivetrain.isBusy()) &&
+                            (!claw.isLiftBusy()) &&
                             (!intake.isSlideBusy()) &&
-                            (!intake.isWristBusy()))
-                    {
+                            (!intake.isWristBusy())) {
                         //Bring the intake in and move to the deliver position (we either have the
                         //sample or we don't!)
                         targetWristPosition = IntakeConstants.WRIST_IN_POS;
@@ -288,10 +284,9 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case DELIVER_SAMPLE_3:
-                    if((!drivetrain.isBusy())  &&
+                    if ((!drivetrain.isBusy()) &&
                             (!intake.isSlideBusy()) &&
-                            (!intake.isWristBusy()))
-                    {
+                            (!intake.isWristBusy())) {
                         //Dump the sample into the claw and then wait
                         intake.setIntakeState(IntakeConstants.IntakeState.OUT);
                         waitTimer.reset();
@@ -299,21 +294,21 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case HAND_OFF_3:
-                    if(waitTimer.seconds() >= handOffSampleTime){
+                    if (waitTimer.seconds() >= handOffSampleTime) {
                         intake.setIntakeState(IntakeConstants.IntakeState.OFF);
                         targetLiftPosition = ClawConstants.LIFT_DELIVER_POS;
                         currentState = State.RAISE_SAMPLE_3;
                     }
                     break;
                 case RAISE_SAMPLE_3:
-                    if(!claw.isLiftBusy()){
+                    if (!claw.isLiftBusy()) {
                         claw.setRotationPosition(ClawConstants.ROTATION_UP);
                         waitTimer.reset();
                         currentState = State.ROTATE_UP_3;
                     }
                     break;
                 case ROTATE_UP_3:
-                    if(waitTimer.seconds() >= rotateUpTime){
+                    if (waitTimer.seconds() >= rotateUpTime) {
                         //Rotate the claw down and wait for the move
                         claw.setRotationPosition(ClawConstants.ROTATION_DOWN);
                         waitTimer.reset();
@@ -321,7 +316,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     }
                     break;
                 case ROTATE_DOWN_3:
-                    if(waitTimer.seconds() >= rotateDownTime){
+                    if (waitTimer.seconds() >= rotateDownTime) {
                         //Lower the lift, extend the intake, and start turn/move sequence
                         targetLiftPosition = ClawConstants.LIFT_HOME_POS;
                         currentState = State.IDLE;
@@ -331,28 +326,27 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                     //Do nothing in Idle
                     break;
             }
-        }
 
-        //This part of the code will always run regardless of the switch statement.  Need to update
-        //drivetrain, service the PID loops and output telemetry
-        drivetrain.update();
-        claw.setClawPosition(targetLiftPosition);
-        intake.setLinearSlidePosition(targetSlidePosition);
-        intake.setWristPosition(targetWristPosition);
+            //This part of the code will always run regardless of the switch statement.  Need to update
+            //drivetrain, service the PID loops and output telemetry
+            drivetrain.update();
+            claw.setLiftPosition(targetLiftPosition);
+            intake.setLinearSlidePosition(targetSlidePosition);
+            intake.setWristPosition(targetWristPosition);
 
-        Pose2d poseEstimate = drivetrain.getPoseEstimate();
+            Pose2d poseEstimate = drivetrain.getPoseEstimate();
 
-        telemetry.addData("X Position", poseEstimate.getX());
-        telemetry.addData("Y Position", poseEstimate.getY());
-        telemetry.addData("Heading", Math.toDegrees(poseEstimate.getHeading()));
-        telemetry.addData("Lift Position", claw.getLiftPosition());
-        telemetry.addData("Lift Target Position", claw.getLiftTargetPosition());
-        telemetry.addData("Slide Position", intake.getLinearSlidePosition());
-        telemetry.addData("Slide Target Position", intake.getLinearSlideTargetPosition());
-        telemetry.addData("Wrist Position", intake.getWristPosition());
-        telemetry.addData("Wrist Target Position", intake.getWristTargetPosition());
-        telemetry.addData("State Machine State", currentState);
-        telemetry.update();
+            telemetry.addData("X Position", poseEstimate.getX());
+            telemetry.addData("Y Position", poseEstimate.getY());
+            telemetry.addData("Heading", Math.toDegrees(poseEstimate.getHeading()));
+            telemetry.addData("Lift Position", claw.getLiftPosition());
+            telemetry.addData("Lift Target Position", claw.getLiftTargetPosition());
+            telemetry.addData("Slide Position", intake.getLinearSlidePosition());
+            telemetry.addData("Slide Target Position", intake.getLinearSlideTargetPosition());
+            telemetry.addData("Wrist Position", intake.getWristPosition());
+            telemetry.addData("Wrist Target Position", intake.getWristTargetPosition());
+            telemetry.addData("State Machine State", currentState);
+            telemetry.update();
 
 
         /*Old Code
@@ -399,6 +393,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
         //Do nothing, wait for end of Op Mode
         //}
         */
+        }
     }
 
     public void clawSequence(Claw claw){
