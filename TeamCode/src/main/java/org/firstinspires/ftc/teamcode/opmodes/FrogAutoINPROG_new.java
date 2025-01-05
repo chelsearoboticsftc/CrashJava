@@ -72,7 +72,7 @@ public class FrogAutoINPROG_new extends LinearOpMode {
                 .splineToLinearHeading(deliveryPos,Math.toRadians(45))
                 .build();
 
-        double turnAngle1 = Math.toRadians(30);
+        double turnAngle1 = Math.toRadians(32);
         double turnAngle2 = Math.toRadians(50);
         double turnAngle3 = Math.toRadians(70);
         double forwardDist = 10;
