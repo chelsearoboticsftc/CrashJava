@@ -15,12 +15,14 @@ public class CrashAutonBlueRight extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drivetrain = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d startingPose = new Pose2d(39.5,62,Math.toRadians(270));
-        Vector2d wayPoint1 = new Vector2d(34,24);
-        Pose2d parkPosition = new Pose2d(21,11,0);
+        Pose2d startingPose = new Pose2d(39.5, 62, Math.toRadians(270));
+        Vector2d wayPoint1 = new Vector2d(34, 24);
+        Pose2d parkPosition = new Pose2d(21, 11, 0);
 
         TrajectoryVelocityConstraint velocityConstraint;
 
         drivetrain.setPoseEstimate(startingPose);
 
-        TrajectorySequence CrashAutonBlueRight= drivetrain.trajectorySequenceBuilder(startingPose);
+        TrajectorySequence CrashAutonBlueRight = drivetrain.trajectorySequenceBuilder(startingPose).build();
+    }
+}

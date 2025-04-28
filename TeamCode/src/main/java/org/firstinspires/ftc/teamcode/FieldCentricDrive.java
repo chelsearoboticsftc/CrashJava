@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
     @TeleOp
-     class FieldCentricDrive extends LinearOpMode {
+     public class FieldCentricDrive extends LinearOpMode {
         @Override
         public void runOpMode() throws InterruptedException {
             // Declare our motors
@@ -25,8 +25,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
             // If your robot moves backwards when commanded to go forwards,
             // reverse the left side instead.
             // See the note about this earlier on this page.
-            frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-            backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            //frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            //backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             // Retrieve the IMU from the hardware map
             IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -74,6 +74,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 backLeftMotor.setPower(backLeftPower);
                 frontRightMotor.setPower(frontRightPower);
                 backRightMotor.setPower(backRightPower);
+
+                //braking
+                frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
         }
     }

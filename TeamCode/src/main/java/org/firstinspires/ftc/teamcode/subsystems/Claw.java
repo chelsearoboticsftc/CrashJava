@@ -3,18 +3,16 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
-public class Intake{
+public class Claw {
 
     DcMotorEx linearSlideMotor;
     DcMotorEx wrist;
     CRServo leftIntake;
     CRServo rightIntake;
 
-    public Intake(HardwareMap hardwareMap){
+    public Claw(HardwareMap hardwareMap){
         this.wrist = hardwareMap.get(DcMotorEx.class, "wrist");
         this.leftIntake = hardwareMap.get(CRServo.class,"intake1");
         this.rightIntake = hardwareMap.get(CRServo.class,"intake2");
