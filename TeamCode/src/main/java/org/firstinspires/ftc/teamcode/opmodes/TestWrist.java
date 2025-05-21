@@ -7,11 +7,12 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeConstants;
 
 @TeleOp
-public class TestWrist extends LinearOpMode {
+public class   TestWrist extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
         int wristPosition;
+        double maxSlideVelocity = 0;
 
         Claw intake = new Claw(hardwareMap);
 
@@ -22,7 +23,7 @@ public class TestWrist extends LinearOpMode {
             wristPosition = intake.getWristPosition();
 
             if(gamepad2.y){
-                intake.setWristPosition(100);
+                intake.setWristPosition(150);
             }else if(gamepad2.a){
                 intake.setWristPosition(0);
             }else{
@@ -34,7 +35,27 @@ public class TestWrist extends LinearOpMode {
                 intake.setIntakeState(IntakeConstants.IntakeState.OFF);
             }
 
+            /*if(gamepad2.right_trigger>0.2){
+                intake.setLinearSlidePower(0.8);
+            }else if(gamepad2.left_trigger>0.2){
+                intake.setLinearSlidePower(-0.8);
+            }else{
+                intake.setLinearSlidePower(0);
+            }*/
+
+            if(gamepad2.b){
+                intake.setLinearSlidePosition(IntakeConstants.SLIDE_OUT_POS);
+            }else if(gamepad2.x){
+                intake.setLinearSlidePosition(IntakeConstants.SLIDE_IN_POS);
+            }
+
+            if(Math.abs(intake.getLinearSlideVelocity())>maxSlideVelocity){
+                maxSlideVelocity = Math.abs(intake.getLinearSlideVelocity());
+            }
+
             telemetry.addData("Wrist Position", wristPosition);
+            telemetry.addData("Slide Position", intake.getLinearSlidePosition());
+            telemetry.addData("Max Slide Velocity", maxSlideVelocity);
             telemetry.update();
         }
     }
