@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
         public void runOpMode() throws InterruptedException {
             // Declare our motors
             // Make sure your ID's match your configuration
+            DcMotor smokey = hardwareMap.dcMotor.get("smokey");
             DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
             DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
             DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
@@ -120,7 +121,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
                 //intake suck out
-                if(gamepad1.x){
+                if(gamepad1.left_bumper){
                     intake1.setPower(.4);
                     intake2.setPower(.4);
                 }
@@ -130,7 +131,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 }
 
                 //intake suck in
-                if(gamepad1.y){
+                if(gamepad1.right_bumper){
                     intake1.setPower(-.4);
                     intake2.setPower(-.4);
                 }
@@ -140,7 +141,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 }
 
                 //GAMEPAD2
-
+                if(gamepad2.right_bumper){
+                    smokey.setPower(.4);
+                }
+                else{
+                    smokey.setPower(0);
+                }
 
 
             }

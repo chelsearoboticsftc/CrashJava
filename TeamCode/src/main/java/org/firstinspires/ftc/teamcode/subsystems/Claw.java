@@ -38,7 +38,6 @@ public class Claw {
         wrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //Set motor control type
         //wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-=======
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Claw {
