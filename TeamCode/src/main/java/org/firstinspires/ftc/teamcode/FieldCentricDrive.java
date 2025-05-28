@@ -22,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
             DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
             DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
             DcMotor wrist = hardwareMap.dcMotor.get("wrist");
+            DcMotor smokey = hardwareMap.dcMotor.get("smokey");
 
             //declaring servos.
             CRServo intake1 = hardwareMap.crservo.get("intake1");
@@ -141,7 +142,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
                 //GAMEPAD2
 
-
+                if(gamepad2.right_bumper){
+                    smokey.setPower(.5);
+                } else if (gamepad2.left_bumper) {
+                    smokey.setPower(-.5);
+                }else{
+                    smokey.setPower(0);
+                }
 
             }
         }
