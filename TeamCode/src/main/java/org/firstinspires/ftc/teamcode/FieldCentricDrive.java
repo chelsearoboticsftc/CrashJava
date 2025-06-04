@@ -21,8 +21,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
             DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
             DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
             DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
+
             DcMotor wrist = hardwareMap.dcMotor.get("wrist");
+
             DcMotor smokey = hardwareMap.dcMotor.get("smokey");
+            smokey.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            //this just resets the encoder position at the start of the opmode, so put it in the position you want to be pos. 0.
+            smokey.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             //declaring servos.
             CRServo intake1 = hardwareMap.crservo.get("intake1");
@@ -143,12 +148,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 //GAMEPAD2
 
                 if(gamepad2.right_bumper){
-                    smokey.setPower(.5);
+                    smokey.setPower(.75);
+                    smokey.getCurrentPosition();
                 } else if (gamepad2.left_bumper) {
-                    smokey.setPower(-.5);
+                    smokey.setPower(-.75);
+                    smokey.getCurrentPosition();
                 }else{
-                    smokey.setPower(0);
+                    smokey.setPower(-.25);
+                    smokey.getCurrentPosition();
                 }
+
+
 
             }
         }
