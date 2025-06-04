@@ -122,8 +122,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
                 //intake suck out
                 if(gamepad1.x){
-                    intake1.setPower(.4);
-                    intake2.setPower(.4);
+                    intake1.setPower(.5);
+                    intake2.setPower(.5);
                 }
                 else{
                     intake1.setPower(0);
@@ -132,8 +132,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
                 //intake suck in
                 if(gamepad1.y){
-                    intake1.setPower(-.4);
-                    intake2.setPower(-.4);
+                    intake1.setPower(-.5);
+                    intake2.setPower(-.5);
                 }
                 else {
                     intake1.setPower(0);
