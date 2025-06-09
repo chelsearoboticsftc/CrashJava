@@ -7,9 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+    //working on:
 
+    //encoders for lift position
+    //Bucket servo
 
     @TeleOp
      public class FieldCentricDrive extends LinearOpMode {
@@ -17,6 +22,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
         public void runOpMode() throws InterruptedException {
             // Declare our motors
             // Make sure your ID's match your configuration
+            Servo bucketServo = hardwareMap.get(Servo.class, "wristservo");
+
             DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
             DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
             DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
@@ -103,12 +110,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-
                 //intake rotation
                 
                 //in
                 if(gamepad1.a){
-                    wrist.setPower(.6);
+                    wrist.setPower(.8);
                 }
                 else {
                     wrist.setPower(0);
@@ -116,19 +122,16 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
                 //out
                 if(gamepad1.b){
-                    wrist.setPower(-.6);
+                    wrist.setPower(-.8);
                 }
                 else{
                     wrist.setPower(0);
                 }
 
-
-
-
                 //intake suck out
                 if(gamepad1.x){
-                    intake1.setPower(.5);
-                    intake2.setPower(.5);
+                    intake1.setPower(.7);
+                    intake2.setPower(.7);
                 }
                 else{
                     intake1.setPower(0);
@@ -137,8 +140,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
                 //intake suck in
                 if(gamepad1.y){
-                    intake1.setPower(-.5);
-                    intake2.setPower(-.5);
+                    intake1.setPower(-.7);
+                    intake2.setPower(-.7);
                 }
                 else {
                     intake1.setPower(0);
@@ -150,7 +153,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 if(gamepad2.right_bumper){
                     smokey.setPower(.75);
                     smokey.getCurrentPosition();
-                } else if (gamepad2.left_bumper) {
+                }else if(gamepad2.left_bumper) {
                     smokey.setPower(-.75);
                     smokey.getCurrentPosition();
                 }else{
@@ -158,6 +161,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                     smokey.getCurrentPosition();
                 }
 
+                if(gamepad2.x){
+                    bucketServo.setPosition(1);
+                }else if(gamepad2.y){
+                    bucketServo.setPosition(.5);
+                }else{
+                    //do nothing
+                }
 
 
             }
