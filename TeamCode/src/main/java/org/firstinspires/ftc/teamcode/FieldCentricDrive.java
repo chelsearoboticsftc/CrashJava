@@ -114,7 +114,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 
                 //in
                 if(gamepad1.a){
-                    wrist.setPower(.8);
+                    wrist.setPower(1);
                 }
                 else {
                     wrist.setPower(0);
@@ -164,7 +164,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
                 if(gamepad2.x){
                     bucketServo.setPosition(1);
                 }else if(gamepad2.y){
-                    bucketServo.setPosition(.5);
+                    bucketServo.setPosition(.27);
                 }else{
                     //do nothing
                 }
